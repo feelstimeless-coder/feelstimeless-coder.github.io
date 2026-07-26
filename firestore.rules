@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public traveler reviews: anyone can read, anyone can create a
+    // well-formed review, nobody can edit or delete from the client.
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if
+        request.resource.data.keys().hasOnly(['name', 'trip', 'stars', 'text', 'photos', 'created']) &&
+        request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 60 &&
+        request.resource.data.trip is string && request.resource.data.trip.size() <= 80 &&
+        request.resource.data.stars is int && request.resource.data.stars >= 1 && request.resource.data.stars <= 5 &&
+        request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 1200 &&
+        request.resource.data.photos is list && request.resource.data.photos.size() <= 3 &&
+        request.resource.data.created == request.time;
+      allow update, delete: if false;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

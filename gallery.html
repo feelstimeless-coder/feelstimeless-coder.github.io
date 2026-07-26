@@ -47,6 +47,39 @@
   </div>
 </section>
 
+<!-- TRIP FILMS -->
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Trip films</span>
+      <h2 class="title">Moments in motion</h2>
+      <p class="sub">Short clips straight from our travelers' phones — unfiltered, unscripted, exactly how it felt.</p>
+    </div>
+    <div class="vidgrid reveal" style="margin-top:30px">
+      <video src="assets/videos/clip-01.mp4" controls preload="metadata" playsinline></video>
+      <video src="assets/videos/clip-02.mp4" controls preload="metadata" playsinline></video>
+      <video src="assets/videos/clip-03.mp4" controls preload="metadata" playsinline></video>
+      <video src="assets/videos/clip-04.mp4" controls preload="metadata" playsinline></video>
+      <video src="assets/videos/clip-05.mp4" controls preload="metadata" playsinline></video>
+      <video src="assets/videos/clip-06.mp4" controls preload="metadata" playsinline></video>
+      <video src="assets/videos/clip-07.mp4" controls preload="metadata" playsinline></video>
+      <video src="assets/videos/clip-08.mp4" controls preload="metadata" playsinline></video>
+    </div>
+  </div>
+</section>
+
+<!-- TRAVELER PHOTOS (appears when Firebase is connected and reviews carry photos) -->
+<section class="block" style="padding-top:0;display:none">
+  <div class="wrap">
+    <div class="reveal in">
+      <span class="eyebrow">Shared by travelers</span>
+      <h2 class="title">Your photos, straight from the road</h2>
+      <p class="sub">Snapshots uploaded by travelers with their reviews — the newest memories first.</p>
+    </div>
+    <div class="gal" id="travelerPhotos" style="margin-top:30px"></div>
+  </div>
+</section>
+
 <section class="block" style="padding-top:0">
   <div class="wrap">
     <div class="cta-band reveal">
@@ -60,6 +93,9 @@
 </main>
 
 <footer class="site"></footer>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="assets/js/firebase-config.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>

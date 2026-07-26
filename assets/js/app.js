@@ -8,10 +8,12 @@ const FT = {
   email: "info@feelstimeless.com",
   phone1: "+256 770 691 883",
   phone2: "+256 777 826 781",
+  phone3: "+256 708 483 536",
   phone1raw: "+256770691883",
   phone2raw: "+256777826781",
+  phone3raw: "+256708483536",
   whatsapp: "256770691883",
-  location: "Online-based · Nakawa, Kampala, Uganda",
+  location: "Online-based · Kampala, Uganda",
 };
 
 /* Logo mark: concentric striped arch sun (echoes the Feels Timeless logo) */
@@ -83,7 +85,7 @@ function renderChrome() {
     <div class="top">
       <div>
         <div class="logo"><span style="color:var(--olive)">${ARCH()}</span><b>Feels Timeless</b></div>
-        <p>A modern, online-based travel company in Nakawa, Kampala — crafting adventures, safaris, beach escapes and city getaways across East Africa and beyond. Travel that feels timeless.</p>
+        <p>A modern, fully online travel company crafting adventures, safaris, beach escapes and city getaways across East Africa and beyond. Travel that feels timeless.</p>
         <div class="socials">
           <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.ig}</a>
           <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">${ICONS.fb}</a>
@@ -113,7 +115,7 @@ function renderChrome() {
         <h4>Get in touch</h4>
         <ul class="contact">
           <li>${ICONS.pin}<span>${FT.location}</span></li>
-          <li>${ICONS.phone}<span><a href="tel:${FT.phone1raw}">${FT.phone1}</a><br><a href="tel:${FT.phone2raw}">${FT.phone2}</a></span></li>
+          <li>${ICONS.phone}<span><a href="tel:${FT.phone1raw}">${FT.phone1}</a><br><a href="tel:${FT.phone2raw}">${FT.phone2}</a><br><a href="tel:${FT.phone3raw}">${FT.phone3}</a></span></li>
           <li>${ICONS.mail}<a href="mailto:${FT.email}">${FT.email}</a></li>
         </ul>
       </div>
@@ -156,6 +158,46 @@ function renderChrome() {
   });
 }
 
+/* ============================ FIREBASE ============================ */
+/* Enabled when assets/js/firebase-config.js sets window.FIREBASE_CONFIG
+   and the compat SDK scripts are on the page. Falls back to localStorage. */
+let FTDB = null;
+function initFirebase() {
+  if (window.FIREBASE_CONFIG && window.firebase && firebase.initializeApp) {
+    try {
+      firebase.initializeApp(window.FIREBASE_CONFIG);
+      FTDB = firebase.firestore();
+    } catch (e) {
+      console.warn("Firebase init failed, using local storage:", e);
+      FTDB = null;
+    }
+  }
+}
+
+/* Compress a picked image to a small JPEG data URL (fits Firestore's 1MB doc limit) */
+function compressImage(file, maxDim = 1000) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * scale);
+      c.height = Math.round(img.height * scale);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      let q = 0.72;
+      let out = c.toDataURL("image/jpeg", q);
+      while (out.length > 300 * 1024 && q > 0.35) {
+        q -= 0.1;
+        out = c.toDataURL("image/jpeg", q);
+      }
+      URL.revokeObjectURL(img.src);
+      res(out);
+    };
+    img.onerror = rej;
+    img.src = URL.createObjectURL(file);
+  });
+}
+
 /* image fallback: olive placeholder with arch mark if a web image fails */
 const PLACEHOLDER = "data:image/svg+xml," + encodeURIComponent(
   `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect width='800' height='600' fill='#a9b15e'/><g stroke='#fbfaf5' stroke-width='7' fill='none' opacity='.7' transform='translate(300,180) scale(1)'><path d='M100 12 V104'/><path d='M85 13 V110 a15 15 0 0 0 30 0 V13'/><path d='M70 17 V110 a30 30 0 0 0 60 0 V17'/><path d='M55 23 V110 a45 45 0 0 0 90 0 V23'/><path d='M40 32 V110 a60 60 0 0 0 120 0 V32'/></g></svg>`
@@ -176,22 +218,29 @@ function initReveal() {
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 }
 
-/* gallery lightbox */
-function initLightbox() {
-  const figs = document.querySelectorAll(".gal figure");
-  if (!figs.length) return;
-  const lb = document.createElement("div");
-  lb.className = "lightbox";
-  lb.innerHTML = `<button class="iconbtn x" aria-label="Close">✕</button><img alt=""><div class="cap"></div>`;
-  document.body.appendChild(lb);
-  figs.forEach((f) => f.addEventListener("click", () => {
-    lb.querySelector("img").src = f.querySelector("img").src;
-    lb.querySelector(".cap").textContent = f.querySelector("figcaption")?.textContent || "";
-    lb.classList.add("open");
-  }));
-  lb.addEventListener("click", (e) => {
-    if (e.target === lb || e.target.closest(".x")) lb.classList.remove("open");
+/* shared lightbox (gallery figures + review photos) */
+let LB = null;
+function ensureLightbox() {
+  if (LB) return LB;
+  LB = document.createElement("div");
+  LB.className = "lightbox";
+  LB.innerHTML = `<button class="iconbtn x" aria-label="Close">✕</button><img alt=""><div class="cap"></div>`;
+  document.body.appendChild(LB);
+  LB.addEventListener("click", (e) => {
+    if (e.target === LB || e.target.closest(".x")) LB.classList.remove("open");
   });
+  return LB;
+}
+function openLightbox(src, cap = "") {
+  const lb = ensureLightbox();
+  lb.querySelector("img").src = src;
+  lb.querySelector(".cap").textContent = cap;
+  lb.classList.add("open");
+}
+function initLightbox() {
+  document.querySelectorAll(".gal figure").forEach((f) =>
+    f.addEventListener("click", () =>
+      openLightbox(f.querySelector("img").src, f.querySelector("figcaption")?.textContent || "")));
 }
 
 /* ============================ REVIEWS ============================ */
@@ -204,30 +253,62 @@ const SEED_REVIEWS = [
   { name: "Kevin Mugisha", trip: "Jinja Adventure Weekend", stars: 4, date: "2026-04-02", text: "Rafting the Nile with this crew was unforgettable. Pickup from Kampala was right on time. Solid value for a weekend adventure." },
 ];
 const R_KEY = "ft-reviews";
-const getReviews = () => {
-  try { return [...JSON.parse(localStorage.getItem(R_KEY) || "[]"), ...SEED_REVIEWS]; }
-  catch { return [...SEED_REVIEWS]; }
+const localReviews = () => {
+  try { return JSON.parse(localStorage.getItem(R_KEY) || "[]"); } catch { return []; }
 };
+/* Cloud-first: Firestore reviews (shared by everyone) + seeds; local fallback */
+async function getReviews() {
+  if (FTDB) {
+    try {
+      const snap = await FTDB.collection("reviews").orderBy("created", "desc").limit(100).get();
+      const cloud = snap.docs.map((d) => {
+        const r = d.data();
+        return { ...r, date: r.created?.toDate ? r.created.toDate().toISOString().slice(0, 10) : (r.date || new Date().toISOString().slice(0, 10)) };
+      });
+      return [...cloud, ...SEED_REVIEWS];
+    } catch (e) {
+      console.warn("Firestore read failed, using local reviews:", e);
+    }
+  }
+  return [...localReviews(), ...SEED_REVIEWS];
+}
+async function saveReview(entry) {
+  if (FTDB) {
+    const doc = { ...entry, created: firebase.firestore.FieldValue.serverTimestamp() };
+    delete doc.date;
+    await FTDB.collection("reviews").add(doc);
+    return "cloud";
+  }
+  const mine = localReviews();
+  mine.unshift(entry);
+  localStorage.setItem(R_KEY, JSON.stringify(mine));
+  return "local";
+}
 const starsRow = (n) =>
   `<span class="stars" aria-label="${n} out of 5 stars">${Array.from({ length: 5 }, (_, i) =>
     `<span style="${i < n ? "" : "opacity:.25"}">${ICONS.star}</span>`).join("")}</span>`;
 
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
 function reviewCard(r) {
-  const initials = r.name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+  const initials = esc(r.name).split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
   const date = new Date(r.date).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  const photos = Array.isArray(r.photos) && r.photos.length
+    ? `<div class="rphotos">${r.photos.map((p) => `<img src="${p}" alt="Traveler photo from ${esc(r.trip)}" loading="lazy">`).join("")}</div>`
+    : "";
   return `<article class="review-card reveal">
     <div class="head">
       <div class="avatar">${initials}</div>
-      <div class="who"><b>${r.name}</b><span>${date} · Verified traveler</span></div>
+      <div class="who"><b>${esc(r.name)}</b><span>${date} · Verified traveler</span></div>
     </div>
     ${starsRow(r.stars)}
-    <p>“${r.text}”</p>
-    <span class="trip-chip">${r.trip}</span>
+    <p>“${esc(r.text)}”</p>
+    ${photos}
+    <span class="trip-chip">${esc(r.trip)}</span>
   </article>`;
 }
 
-function renderReviewSummary(mount) {
-  const rs = getReviews();
+function renderReviewSummary(mount, rs) {
   const avg = rs.reduce((a, r) => a + r.stars, 0) / rs.length;
   const counts = [5, 4, 3, 2, 1].map((s) => rs.filter((r) => r.stars === s).length);
   mount.innerHTML = `
@@ -245,12 +326,37 @@ function initReviewsPage() {
   const list = document.getElementById("reviewList");
   if (!list) return;
   const summary = document.getElementById("reviewSummary");
-  const paint = () => {
-    list.innerHTML = getReviews().map(reviewCard).join("");
-    renderReviewSummary(summary);
+  const paint = async () => {
+    const rs = await getReviews();
+    list.innerHTML = rs.map(reviewCard).join("");
+    renderReviewSummary(summary, rs);
+    list.querySelectorAll(".rphotos img").forEach((img) =>
+      img.addEventListener("click", () => openLightbox(img.src, img.alt)));
     initReveal();
   };
   paint();
+
+  // photo picking + compression (max 3)
+  let pendingPhotos = [];
+  const photoInput = document.getElementById("rphotos");
+  const preview = document.getElementById("photoPreview");
+  const paintPreview = () => {
+    preview.innerHTML = pendingPhotos.map((p, i) =>
+      `<span class="pv"><img src="${p}" alt="Photo ${i + 1}"><button type="button" data-i="${i}" aria-label="Remove photo">✕</button></span>`).join("");
+  };
+  if (photoInput) {
+    photoInput.addEventListener("change", async () => {
+      for (const file of [...photoInput.files].slice(0, 3 - pendingPhotos.length)) {
+        try { pendingPhotos.push(await compressImage(file)); } catch { /* skip unreadable file */ }
+      }
+      photoInput.value = "";
+      paintPreview();
+    });
+    preview.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (b) { pendingPhotos.splice(+b.dataset.i, 1); paintPreview(); }
+    });
+  }
 
   // star input
   let chosen = 5;
@@ -266,27 +372,37 @@ function initReviewsPage() {
   });
   paintStars();
 
-  document.getElementById("reviewForm").addEventListener("submit", (e) => {
+  document.getElementById("reviewForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const f = e.target;
     const entry = {
-      name: f.rname.value.trim(),
+      name: f.rname.value.trim().slice(0, 60),
       trip: f.rtrip.value,
-      text: f.rtext.value.trim(),
+      text: f.rtext.value.trim().slice(0, 1200),
       stars: chosen,
+      photos: pendingPhotos,
       date: new Date().toISOString().slice(0, 10),
     };
     if (!entry.name || !entry.text) return;
-    const mine = JSON.parse(localStorage.getItem(R_KEY) || "[]");
-    mine.unshift(entry);
-    localStorage.setItem(R_KEY, JSON.stringify(mine));
-    f.reset();
-    chosen = 5; paintStars();
-    paint();
+    const btn = f.querySelector('button[type="submit"]');
     const n = document.getElementById("reviewNotice");
-    n.textContent = "Webale nyo! Your review has been published below.";
+    btn.disabled = true;
+    try {
+      const where = await saveReview(entry);
+      f.reset();
+      chosen = 5; paintStars();
+      pendingPhotos = []; paintPreview();
+      await paint();
+      n.textContent = where === "cloud"
+        ? "Webale nyo! Your review and photos are now live for everyone to see."
+        : "Webale nyo! Your review has been published below.";
+    } catch (err) {
+      console.warn("Review save failed:", err);
+      n.textContent = "Hmm, we couldn't publish that just now — please try again in a moment.";
+    }
+    btn.disabled = false;
     n.classList.add("show");
-    setTimeout(() => n.classList.remove("show"), 5000);
+    setTimeout(() => n.classList.remove("show"), 6000);
   });
 }
 
@@ -389,18 +505,38 @@ function initBookingPage() {
 }
 
 /* home page: featured reviews strip */
-function initHomeReviews() {
+async function initHomeReviews() {
   const mount = document.getElementById("homeReviews");
   if (!mount) return;
-  mount.innerHTML = getReviews().slice(0, 3).map(reviewCard).join("");
+  const rs = await getReviews();
+  mount.innerHTML = rs.slice(0, 3).map(reviewCard).join("");
+  mount.querySelectorAll(".rphotos img").forEach((img) =>
+    img.addEventListener("click", () => openLightbox(img.src, img.alt)));
+  initReveal();
+}
+
+/* gallery page: latest traveler photos from cloud reviews */
+async function initTravelerPhotos() {
+  const mount = document.getElementById("travelerPhotos");
+  if (!mount || !FTDB) return;
+  const rs = await getReviews();
+  const shots = rs.flatMap((r) => (Array.isArray(r.photos) ? r.photos.map((p) => ({ p, by: r.name, trip: r.trip })) : [])).slice(0, 12);
+  if (!shots.length) return;
+  mount.closest("section").style.display = "";
+  mount.innerHTML = shots.map((s) =>
+    `<figure><img src="${s.p}" alt="Photo by ${esc(s.by)} — ${esc(s.trip)}" loading="lazy"><figcaption>${esc(s.by)} · ${esc(s.trip)}</figcaption></figure>`).join("");
+  mount.querySelectorAll("figure").forEach((f) =>
+    f.addEventListener("click", () => openLightbox(f.querySelector("img").src, f.querySelector("figcaption").textContent)));
 }
 
 /* boot */
 document.addEventListener("DOMContentLoaded", () => {
+  initFirebase();
   renderChrome();
   initHomeReviews();
   initReviewsPage();
   initBookingPage();
+  initTravelerPhotos();
   initLightbox();
   guardImages();
   initReveal();

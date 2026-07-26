@@ -325,6 +325,20 @@ html[data-theme="dark"] .review-card .trip-chip { color: var(--olive); }
 .rating-summary .bar .track { height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
 .rating-summary .bar .fill { height: 100%; background: var(--olive); border-radius: 99px; }
 
+/* traveler photos on reviews */
+.rphotos { display: flex; gap: 8px; flex-wrap: wrap; }
+.rphotos img {
+  width: 76px; height: 76px; object-fit: cover; border-radius: 10px;
+  border: 1px solid var(--line); cursor: zoom-in; transition: 0.2s;
+}
+.rphotos img:hover { transform: scale(1.05); border-color: var(--olive); }
+.rphotos .pv { position: relative; display: inline-block; }
+.rphotos .pv button {
+  position: absolute; top: -7px; right: -7px; width: 22px; height: 22px;
+  border-radius: 50%; border: none; background: var(--ink); color: var(--paper);
+  font-size: 11px; line-height: 1;
+}
+
 .star-input { display: flex; gap: 6px; }
 .star-input button { background: none; border: none; color: var(--line); transition: 0.15s; padding: 2px; }
 .star-input button svg { width: 30px; height: 30px; }
@@ -392,6 +406,14 @@ html[data-theme="dark"] .booking-item .status { color: var(--olive); }
   background: linear-gradient(transparent, rgba(18, 19, 15, 0.75)); opacity: 0; transition: 0.3s;
 }
 .gal figure:hover figcaption { opacity: 1; }
+
+.vidgrid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px;
+}
+.vidgrid video {
+  width: 100%; max-height: 420px; border-radius: var(--r-md); background: #0a0b09;
+  border: 1px solid var(--line); display: block;
+}
 
 .lightbox {
   position: fixed; inset: 0; z-index: 90; background: rgba(10, 11, 9, 0.92);

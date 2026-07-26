@@ -68,6 +68,11 @@
         <label for="rtext">Your experience</label>
         <textarea id="rtext" name="rtext" rows="4" placeholder="What did it feel like? What should future travelers know?" required></textarea>
       </div>
+      <div class="field">
+        <label for="rphotos">Photos from your trip <span style="font-weight:400;color:var(--ink-soft)">(optional, up to 3)</span></label>
+        <input type="file" id="rphotos" accept="image/*" multiple>
+        <div id="photoPreview" class="rphotos" style="margin-top:8px"></div>
+      </div>
       <button class="btn" type="submit">Publish review</button>
       <div class="notice" id="reviewNotice" role="status"></div>
     </form>
@@ -76,6 +81,9 @@
 </main>
 
 <footer class="site"></footer>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="assets/js/firebase-config.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
