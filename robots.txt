@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /luxvoyage-legacy.html
+
+Sitemap: https://feelstimeless-coder.github.io/sitemap.xml
