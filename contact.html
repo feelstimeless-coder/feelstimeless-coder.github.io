@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact Us — Feels Timeless | Nakawa, Kampala</title>
+<meta name="description" content="Contact Feels Timeless — info@feelstimeless.com, +256 770 691 883 / +256 777 826 781. Online-based in Nakawa, Kampala, Uganda.">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Outfit:wght@300..800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script>document.documentElement.dataset.theme=localStorage.getItem("ft-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");</script>
+</head>
+<body data-page="contact.html">
+<header class="site"></header>
+
+<main>
+<section class="pagehero">
+  <div class="bg"><img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=2000&q=80" alt="View from an airplane window above the clouds"></div>
+  <div class="wrap inner">
+    <span class="crumb">Home ✦ Contact</span>
+    <h1>We're always <span class="script" style="color:var(--olive)">reachable</span></h1>
+    <p>Online-based means always on. WhatsApp is fastest, calls are warmest, email is safest for documents — pick your favourite.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="grid c3">
+      <a class="card reveal" href="tel:+256770691883">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <h3>Call or WhatsApp</h3>
+        <p style="font-size:16.5px;font-weight:650;color:var(--ink)">+256 770 691 883</p>
+        <p style="font-size:16.5px;font-weight:650;color:var(--ink)">+256 777 826 781</p>
+        <p style="margin-top:8px">Every day, 8:00 – 22:00 EAT</p>
+      </a>
+      <a class="card reveal" href="mailto:info@feelstimeless.com">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+        <h3>Email us</h3>
+        <p style="font-size:16.5px;font-weight:650;color:var(--ink)">info@feelstimeless.com</p>
+        <p style="margin-top:8px">Quotes, documents & partnerships. We reply within one business day.</p>
+      </a>
+      <div class="card reveal">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>Find us</h3>
+        <p style="font-size:16.5px;font-weight:650;color:var(--ink)">Online-based · Nakawa</p>
+        <p style="margin-top:8px">Kampala, Uganda. In-person meetings by appointment — coffee's on us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="background:var(--surface-2);border-radius:var(--r-lg)">
+  <div class="wrap split" style="align-items:flex-start">
+    <form class="form-card reveal" id="contactForm">
+      <span class="eyebrow">Say hello</span>
+      <h2 class="title" style="font-size:30px">Send us a message</h2>
+      <div class="frow" style="margin-top:10px">
+        <div class="field">
+          <label for="cname">Your name</label>
+          <input id="cname" type="text" required>
+        </div>
+        <div class="field">
+          <label for="cphone">Phone / WhatsApp</label>
+          <input id="cphone" type="tel" placeholder="+256 ...">
+        </div>
+      </div>
+      <div class="field">
+        <label for="csubject">Subject</label>
+        <select id="csubject">
+          <option>Trip inquiry</option>
+          <option>Group / staff trip</option>
+          <option>Existing booking</option>
+          <option>Partnership</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="cmsg">Message</label>
+        <textarea id="cmsg" rows="5" placeholder="Tell us everything..." required></textarea>
+      </div>
+      <button class="btn" type="submit">Open in my email app</button>
+      <div class="notice" id="contactNotice" role="status"></div>
+    </form>
+
+    <div>
+      <div class="map-card reveal">
+        <iframe title="Map of Nakawa, Kampala" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Nakawa,+Kampala,+Uganda&output=embed"></iframe>
+      </div>
+      <div class="card reveal" style="margin-top:22px">
+        <h3>Prefer instant answers?</h3>
+        <p>The green WhatsApp bubble in the corner goes straight to a planner's phone. Average reply time: minutes, not days.</p>
+        <a class="btn sm" style="margin-top:14px" target="_blank" rel="noopener" href="https://wa.me/256770691883?text=Hello%20Feels%20Timeless!%20I%27d%20like%20to%20plan%20a%20trip.">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site"></footer>
+<script src="assets/js/app.js"></script>
+<script>
+document.getElementById("contactForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = document.getElementById("cname").value.trim();
+  const phone = document.getElementById("cphone").value.trim();
+  const subject = document.getElementById("csubject").value;
+  const msg = document.getElementById("cmsg").value.trim();
+  const body = `${msg}\n\n— ${name}${phone ? " · " + phone : ""}`;
+  location.href = `mailto:info@feelstimeless.com?subject=${encodeURIComponent(subject + " — " + name)}&body=${encodeURIComponent(body)}`;
+  const n = document.getElementById("contactNotice");
+  n.textContent = "Opening your email app… if nothing happens, write to info@feelstimeless.com directly.";
+  n.classList.add("show");
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Trip — Feels Timeless</title>
+<meta name="description" content="Book your Feels Timeless trip — add all your travelers, family or company staff to one booking and get a tailored quote within 48 hours.">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Outfit:wght@300..800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script>document.documentElement.dataset.theme=localStorage.getItem("ft-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");</script>
+</head>
+<body data-page="booking.html">
+<header class="site"></header>
+
+<main>
+<section class="pagehero">
+  <div class="bg"><img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=2000&q=80" alt="Resort pool overlooking the ocean"></div>
+  <div class="wrap inner">
+    <span class="crumb">Home ✦ Book a trip</span>
+    <h1>Let's make it <span class="script" style="color:var(--olive)">official</span></h1>
+    <p>Tell us the dream, add everyone who's coming — friends, family, or your entire staff — and we'll reply within 48 hours with a tailored itinerary and quote. No payment needed to request.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap split" style="align-items:flex-start">
+    <div>
+      <form class="form-card reveal" id="bookingForm">
+        <span class="eyebrow">Step 1 · The trip</span>
+        <div class="frow" style="margin-top:16px">
+          <div class="field">
+            <label for="bdest">Destination / trip</label>
+            <select id="bdest" name="bdest">
+              <option>Zanzibar Beach Escape</option>
+              <option>Diani Beach Escape</option>
+              <option>Murchison Falls Safari</option>
+              <option>Masai Mara Safari</option>
+              <option>Serengeti Safari</option>
+              <option>Gorilla Trekking — Bwindi</option>
+              <option>Nairobi City + Giraffe Centre</option>
+              <option>Jinja Adventure Weekend</option>
+              <option>Cape Town Discovery</option>
+              <option>Dubai City Break</option>
+              <option>Bali Escape</option>
+              <option>Santorini Romance</option>
+              <option>Paris City Break</option>
+              <option>Maldives Overwater Escape</option>
+              <option>Cairo &amp; Pyramids</option>
+              <option>Surprise me — I trust you</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="bdate">Preferred start date</label>
+            <input id="bdate" name="bdate" type="date">
+          </div>
+        </div>
+        <div class="frow">
+          <div class="field">
+            <label for="bbudget">Budget per person</label>
+            <select id="bbudget" name="bbudget">
+              <option>Under $500</option>
+              <option>$500 – $1,000</option>
+              <option>$1,000 – $2,000</option>
+              <option>$2,000+</option>
+              <option>Advise me</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="borg">Company / group name <span style="font-weight:400;color:var(--ink-soft)">(optional — for staff trips)</span></label>
+            <input id="borg" name="borg" type="text" placeholder="e.g. Acme Ltd team retreat">
+          </div>
+        </div>
+
+        <span class="eyebrow" style="margin-top:14px">Step 2 · Who's traveling?</span>
+        <p class="sub" style="font-size:14px;margin:8px 0 14px">Add every traveler — colleagues, family, the whole office. Booking for your company? Choose "Staff member" for each employee and we'll organize rooming lists and one invoice.</p>
+        <div id="travelers"></div>
+        <button class="btn ghost sm" type="button" id="addTraveler">＋ Add another traveler</button>
+
+        <span class="eyebrow" style="margin-top:26px;display:inline-flex">Step 3 · Lead contact</span>
+        <div class="frow" style="margin-top:14px">
+          <div class="field">
+            <label for="bname">Your name</label>
+            <input id="bname" name="bname" type="text" required>
+          </div>
+          <div class="field">
+            <label for="bphone">Phone / WhatsApp</label>
+            <input id="bphone" name="bphone" type="tel" placeholder="+256 ..." required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="bnotes">Anything else we should know?</label>
+          <textarea id="bnotes" name="bnotes" rows="3" placeholder="Dietary needs, birthdays on the trip, dream activities, accessibility..."></textarea>
+        </div>
+        <button class="btn" type="submit" style="width:100%;justify-content:center">Request this trip</button>
+        <div class="notice" id="bookingNotice" role="status"></div>
+      </form>
+    </div>
+
+    <div>
+      <div class="card reveal" style="margin-bottom:22px">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+        <h3>What happens next?</h3>
+        <p>Your request lands with a real planner (hi 👋). Within 48 hours you'll get a tailored itinerary and quote on WhatsApp or email. Nothing is charged until you approve it.</p>
+      </div>
+      <div class="card reveal" style="margin-bottom:22px">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M2 21c2-4 6-6 10-6s8 2 10 6"/></svg></div>
+        <h3>Booking for a company?</h3>
+        <p>Add each staff member as a traveler, put your company name in Step 1, and we'll handle rooming, transport, dietary lists and a single consolidated invoice for finance.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <h3>Prefer to talk?</h3>
+        <p>Call <a href="tel:+256770691883" style="font-weight:650">+256 770 691 883</a> or <a href="tel:+256777826781" style="font-weight:650">+256 777 826 781</a>, or tap the WhatsApp bubble — we're around every day, 8:00–22:00 EAT.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="mybookings" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">On this device</span>
+      <h2 class="title">My booking requests</h2>
+      <p class="sub">Requests you've made from this browser are saved here for your reference.</p>
+    </div>
+    <div id="bookingList" style="margin-top:26px"></div>
+  </div>
+</section>
+</main>
+
+<footer class="site"></footer>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

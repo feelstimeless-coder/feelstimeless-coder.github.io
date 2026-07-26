@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traveler Reviews — Feels Timeless</title>
+<meta name="description" content="Read verified traveler reviews of Feels Timeless trips, see our overall rating, and leave your own review.">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Outfit:wght@300..800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script>document.documentElement.dataset.theme=localStorage.getItem("ft-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");</script>
+</head>
+<body data-page="reviews.html">
+<header class="site"></header>
+
+<main>
+<section class="pagehero">
+  <div class="bg"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=2000&q=80" alt="Happy travelers at golden hour"></div>
+  <div class="wrap inner">
+    <span class="crumb">Home ✦ Reviews</span>
+    <h1>Don't take our <span class="script" style="color:var(--olive)">word</span> for it</h1>
+    <p>Every review below is from a traveler who booked with us. Been on a Feels Timeless trip? Scroll down and add yours — the good, the great and the honest.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="rating-summary reveal" id="reviewSummary"></div>
+    <div class="masonry" id="reviewList" style="margin-top:34px"></div>
+  </div>
+</section>
+
+<section class="block" style="background:var(--surface-2);border-radius:var(--r-lg)">
+  <div class="wrap" style="max-width:760px">
+    <div class="center reveal">
+      <span class="eyebrow">Your turn</span>
+      <h2 class="title">Leave a review</h2>
+      <p class="sub">Traveled with us? Two minutes of your time helps the next dreamer decide.</p>
+    </div>
+    <form class="form-card reveal" id="reviewForm" style="margin-top:32px">
+      <div class="field">
+        <label>Your rating</label>
+        <div class="star-input" id="starInput"></div>
+      </div>
+      <div class="frow">
+        <div class="field">
+          <label for="rname">Your name</label>
+          <input id="rname" name="rname" type="text" placeholder="e.g. Amina N." required>
+        </div>
+        <div class="field">
+          <label for="rtrip">Which trip?</label>
+          <select id="rtrip" name="rtrip">
+            <option>Zanzibar Beach Escape</option>
+            <option>Diani Beach Escape</option>
+            <option>Murchison Falls Safari</option>
+            <option>Masai Mara Safari</option>
+            <option>Gorilla Trekking — Bwindi</option>
+            <option>Nairobi City + Giraffe Centre</option>
+            <option>Jinja Adventure Weekend</option>
+            <option>Dubai City Break</option>
+            <option>Another Feels Timeless trip</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="rtext">Your experience</label>
+        <textarea id="rtext" name="rtext" rows="4" placeholder="What did it feel like? What should future travelers know?" required></textarea>
+      </div>
+      <button class="btn" type="submit">Publish review</button>
+      <div class="notice" id="reviewNotice" role="status"></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="site"></footer>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
