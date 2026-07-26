@@ -87,10 +87,8 @@ function renderChrome() {
         <div class="logo"><span style="color:var(--olive)">${ARCH()}</span><b>Feels Timeless</b></div>
         <p>A modern, fully online travel company crafting adventures, safaris, beach escapes and city getaways across East Africa and beyond. Travel that feels timeless.</p>
         <div class="socials">
-          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.ig}</a>
-          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">${ICONS.fb}</a>
-          <a href="https://x.com" target="_blank" rel="noopener" aria-label="X">${ICONS.x}</a>
-          <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">${ICONS.tk}</a>
+          <a href="https://www.instagram.com/feels_2.3" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.ig}</a>
+          <a href="https://www.tiktok.com/@feels_timeless" target="_blank" rel="noopener" aria-label="TikTok">${ICONS.tk}</a>
         </div>
       </div>
       <div>
