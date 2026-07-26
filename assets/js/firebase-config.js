@@ -15,16 +15,12 @@
    (reviews stay in each visitor's browser).
    ============================================================ */
 
-window.FIREBASE_CONFIG = null;
-
-/* Example — replace with your real values, then delete the line above:
-
 window.FIREBASE_CONFIG = {
-  apiKey: "AIza....................",
-  authDomain: "feelstimeless.firebaseapp.com",
-  projectId: "feelstimeless",
-  storageBucket: "feelstimeless.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef123456"
+  apiKey: "AIzaSyBeFCywJnRK4QRiw-peKOMdVTLkwQiRDlg",
+  authDomain: "feels-timeless.firebaseapp.com",
+  projectId: "feels-timeless",
+  storageBucket: "feels-timeless.firebasestorage.app",
+  messagingSenderId: "848320854818",
+  appId: "1:848320854818:web:eb2bcf403ef40f137d037b",
+  measurementId: "G-74VRRG8CQ6"
 };
-*/
