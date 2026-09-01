@@ -122,7 +122,7 @@ function renderChrome() {
     </div>
     <div class="bottom">
       <span>© <span id="yr"></span> Feels Timeless Ltd. All rights reserved.</span>
-      <span>Made with love in Kampala 🇺🇬</span>
+      <a href="https://creedmotions.store" target="_blank" rel="noopener" style="opacity:.9">Made by Creedmotions</a>
     </div>
   </div>`;
   document.querySelector("footer.site").innerHTML = footer;
