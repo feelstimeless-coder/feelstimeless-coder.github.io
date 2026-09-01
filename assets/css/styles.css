@@ -75,15 +75,16 @@ html[data-theme="dark"] .script { color: var(--olive); }
 
 /* ---------- topbar + nav ---------- */
 .topbar {
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 13px;
-  padding: 7px 0;
+  background: #14150f;
+  color: #f5f4ec;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 8px 0;
 }
-html[data-theme="dark"] .topbar { background: var(--surface-2); }
 .topbar .wrap { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-.topbar a { opacity: 0.85; display: inline-flex; gap: 6px; align-items: center; }
-.topbar a:hover { opacity: 1; color: var(--olive); }
+.topbar a { display: inline-flex; gap: 6px; align-items: center; }
+.topbar a:hover { color: var(--olive); }
+.topbar svg { color: var(--olive); }
 .topbar .spacer { margin-left: auto; }
 
 header.site {
