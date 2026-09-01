@@ -543,6 +543,47 @@ async function initTravelerPhotos() {
     f.addEventListener("click", () => openLightbox(f.querySelector("img").src, f.querySelector("figcaption").textContent)));
 }
 
+/* SEO: structured data injected at runtime (Google renders JS) */
+function injectJsonLd(obj) {
+  const s = document.createElement("script");
+  s.type = "application/ld+json";
+  s.textContent = JSON.stringify(obj);
+  document.head.appendChild(s);
+}
+function initSchema() {
+  const page = document.body.dataset.page || "index.html";
+  const BASE = "https://www.feelstimeless.com";
+  const names = { "index.html": "Home", "about.html": "About", "services.html": "Experiences", "destinations.html": "Destinations", "events.html": "Events & Festivals", "gallery.html": "Gallery", "reviews.html": "Reviews", "booking.html": "Book a Trip", "contact.html": "Contact" };
+  const items = [{ "@type": "ListItem", position: 1, name: "Home", item: BASE + "/" }];
+  if (page !== "index.html" && names[page]) {
+    items.push({ "@type": "ListItem", position: 2, name: names[page], item: `${BASE}/${page}` });
+  }
+  injectJsonLd({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items });
+}
+async function initReviewSchema() {
+  const page = document.body.dataset.page;
+  if (page !== "reviews.html") return;
+  try {
+    const rs = await getReviews();
+    if (!rs.length) return;
+    const avg = (rs.reduce((a, r) => a + r.stars, 0) / rs.length).toFixed(1);
+    injectJsonLd({
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "Feels Timeless",
+      "url": "https://www.feelstimeless.com/",
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": avg, "reviewCount": String(rs.length), "bestRating": "5" },
+      "review": rs.slice(0, 3).map((r) => ({
+        "@type": "Review",
+        "author": { "@type": "Person", "name": r.name },
+        "datePublished": r.date,
+        "reviewRating": { "@type": "Rating", "ratingValue": String(r.stars), "bestRating": "5" },
+        "reviewBody": r.text,
+      })),
+    });
+  } catch { /* schema is best-effort */ }
+}
+
 /* boot */
 document.addEventListener("DOMContentLoaded", () => {
   initFirebase();
@@ -552,6 +593,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initBookingPage();
   initTravelerPhotos();
   initVideoBands();
+  initSchema();
+  initReviewSchema();
   initLightbox();
   guardImages();
   initReveal();
