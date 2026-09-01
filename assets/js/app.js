@@ -109,6 +109,8 @@ function renderChrome() {
           <li><a href="booking.html#mybookings">My bookings</a></li>
           <li><a href="reviews.html">Reviews</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of service</a></li>
         </ul>
       </div>
       <div>
@@ -122,7 +124,7 @@ function renderChrome() {
     </div>
     <div class="bottom">
       <span>© <span id="yr"></span> Feels Timeless Ltd. All rights reserved.</span>
-      <a href="https://creedmotions.store" target="_blank" rel="noopener" style="opacity:.9">Made by Creedmotions</a>
+      <a href="https://creedmotions.store" target="_blank" rel="noopener" style="color:var(--olive);font-weight:650;text-decoration:underline;text-underline-offset:3px">Made by Creedmotions</a>
     </div>
   </div>`;
   document.querySelector("footer.site").innerHTML = footer;
