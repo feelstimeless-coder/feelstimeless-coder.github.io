@@ -13,7 +13,7 @@ const FT = {
   phone2raw: "+256777826781",
   phone3raw: "+256708483536",
   whatsapp: "256770691883",
-  location: "Online-based · Kampala, Uganda",
+  location: "Nakawa, Kampala, Uganda · Online planners 24/7",
 };
 
 /* Logo mark: concentric striped arch sun (echoes the Feels Timeless logo) */
@@ -46,6 +46,7 @@ const NAV = [
   ["about.html", "About"],
   ["services.html", "Experiences"],
   ["destinations.html", "Destinations"],
+  ["events.html", "Events"],
   ["gallery.html", "Gallery"],
   ["reviews.html", "Reviews"],
   ["contact.html", "Contact"],
@@ -85,7 +86,7 @@ function renderChrome() {
     <div class="top">
       <div>
         <div class="logo"><span style="color:var(--olive)">${ARCH()}</span><b>Feels Timeless</b></div>
-        <p>A modern, fully online travel company crafting adventures, safaris, beach escapes and city getaways across East Africa and beyond. Travel that feels timeless.</p>
+        <p>A modern travel company based in Nakawa, Kampala — crafting safaris, beach escapes, festivals and city getaways across East Africa and beyond. Our planners are online 24/7; we handle everything on the ground. Travel that feels timeless.</p>
         <div class="socials">
           <a href="https://www.instagram.com/feels_2.3" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.ig}</a>
           <a href="https://www.tiktok.com/@feels_timeless" target="_blank" rel="noopener" aria-label="TikTok">${ICONS.tk}</a>
@@ -97,6 +98,7 @@ function renderChrome() {
           <li><a href="about.html">About us</a></li>
           <li><a href="services.html">Experiences</a></li>
           <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="events.html">Events &amp; festivals</a></li>
           <li><a href="gallery.html">Trip gallery</a></li>
         </ul>
       </div>
@@ -206,6 +208,20 @@ function guardImages() {
       if (img.src !== PLACEHOLDER) img.src = PLACEHOLDER;
     }, { once: true });
   });
+}
+
+/* ambient video bands: play only while on screen (autoplay can be blocked until nudged) */
+function initVideoBands() {
+  const vids = document.querySelectorAll(".vband video");
+  if (!vids.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      const v = e.target;
+      if (e.isIntersecting) { v.play().catch(() => {}); }
+      else { v.pause(); }
+    });
+  }, { threshold: 0.2 });
+  vids.forEach((v) => io.observe(v));
 }
 
 /* scroll reveal */
@@ -535,6 +551,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initReviewsPage();
   initBookingPage();
   initTravelerPhotos();
+  initVideoBands();
   initLightbox();
   guardImages();
   initReveal();
