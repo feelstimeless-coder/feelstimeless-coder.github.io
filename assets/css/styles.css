@@ -233,6 +233,11 @@ p.sub { color: var(--ink-soft); max-width: 62ch; }
   padding: 26px; transition: 0.25s; position: relative; overflow: hidden;
 }
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--olive-line); }
+.card .cardimg {
+  width: calc(100% + 52px); margin: -26px -26px 18px; max-width: none;
+  aspect-ratio: 16 / 10; object-fit: cover; display: block;
+  border-radius: var(--r-md) var(--r-md) 0 0;
+}
 .card .ico {
   width: 52px; height: 52px; border-radius: 16px; background: var(--olive-soft);
   display: grid; place-items: center; color: var(--olive-deep); margin-bottom: 16px;
