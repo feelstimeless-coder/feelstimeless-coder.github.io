@@ -42,14 +42,14 @@ const ICONS = {
 };
 
 const NAV = [
-  ["index.html", "Home"],
-  ["about.html", "About"],
-  ["services.html", "Experiences"],
-  ["destinations.html", "Destinations"],
-  ["events.html", "Events"],
-  ["gallery.html", "Gallery"],
-  ["reviews.html", "Reviews"],
-  ["contact.html", "Contact"],
+  ["/", "Home"],
+  ["about", "About"],
+  ["services", "Experiences"],
+  ["destinations", "Destinations"],
+  ["events", "Events"],
+  ["gallery", "Gallery"],
+  ["reviews", "Reviews"],
+  ["contact", "Contact"],
 ];
 
 function renderChrome() {
@@ -61,18 +61,18 @@ function renderChrome() {
       <a class="hide-m" href="tel:${FT.phone2raw}">${ICONS.phone} ${FT.phone2}</a>
       <a class="hide-m" href="mailto:${FT.email}">${ICONS.mail} ${FT.email}</a>
       <span class="spacer"></span>
-      <a href="about.html#location">${ICONS.pin} ${FT.location}</a>
+      <a href="about#location">${ICONS.pin} ${FT.location}</a>
     </div>
   </div>
   <div class="wrap navrow">
-    <a class="brand" href="index.html" aria-label="Feels Timeless home">
+    <a class="brand" href="/" aria-label="Feels Timeless home">
       <span style="color:var(--olive)">${ARCH()}</span>
       <span class="word"><b>Feels</b><span>Timeless</span></span>
     </a>
     <nav class="main" id="mainnav">
       <button class="iconbtn navclose" aria-label="Close menu">✕</button>
-      ${NAV.map(([href, label]) => `<a href="${href}" class="${page === href ? "active" : ""}">${label}</a>`).join("")}
-      <a href="booking.html" class="cta ${page === "booking.html" ? "active" : ""}">Book a trip</a>
+      ${NAV.map(([href, label]) => `<a href="${href}" class="${(href === "/" ? page === "index" : page === href) ? "active" : ""}">${label}</a>`).join("")}
+      <a href="booking" class="cta ${page === "booking" ? "active" : ""}">Book a trip</a>
     </nav>
     <button class="iconbtn" id="themeToggle" aria-label="Toggle dark mode"></button>
     <button class="iconbtn burger" id="burger" aria-label="Open menu">
@@ -95,22 +95,22 @@ function renderChrome() {
       <div>
         <h4>Explore</h4>
         <ul>
-          <li><a href="about.html">About us</a></li>
-          <li><a href="services.html">Experiences</a></li>
-          <li><a href="destinations.html">Destinations</a></li>
-          <li><a href="events.html">Events &amp; festivals</a></li>
-          <li><a href="gallery.html">Trip gallery</a></li>
+          <li><a href="about">About us</a></li>
+          <li><a href="services">Experiences</a></li>
+          <li><a href="destinations">Destinations</a></li>
+          <li><a href="events">Events &amp; festivals</a></li>
+          <li><a href="gallery">Trip gallery</a></li>
         </ul>
       </div>
       <div>
         <h4>Travelers</h4>
         <ul>
-          <li><a href="booking.html">Book a trip</a></li>
-          <li><a href="booking.html#mybookings">My bookings</a></li>
-          <li><a href="reviews.html">Reviews</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="privacy.html">Privacy policy</a></li>
-          <li><a href="terms.html">Terms of service</a></li>
+          <li><a href="booking">Book a trip</a></li>
+          <li><a href="booking#mybookings">My bookings</a></li>
+          <li><a href="reviews">Reviews</a></li>
+          <li><a href="contact">Contact</a></li>
+          <li><a href="privacy">Privacy policy</a></li>
+          <li><a href="terms">Terms of service</a></li>
         </ul>
       </div>
       <div>
@@ -553,18 +553,18 @@ function injectJsonLd(obj) {
   document.head.appendChild(s);
 }
 function initSchema() {
-  const page = document.body.dataset.page || "index.html";
+  const page = document.body.dataset.page || "index";
   const BASE = "https://www.feelstimeless.com";
-  const names = { "index.html": "Home", "about.html": "About", "services.html": "Experiences", "destinations.html": "Destinations", "events.html": "Events & Festivals", "gallery.html": "Gallery", "reviews.html": "Reviews", "booking.html": "Book a Trip", "contact.html": "Contact" };
+  const names = { "index": "Home", "about": "About", "services": "Experiences", "destinations": "Destinations", "events": "Events & Festivals", "gallery": "Gallery", "reviews": "Reviews", "booking": "Book a Trip", "contact": "Contact" };
   const items = [{ "@type": "ListItem", position: 1, name: "Home", item: BASE + "/" }];
-  if (page !== "index.html" && names[page]) {
+  if (page !== "index" && names[page]) {
     items.push({ "@type": "ListItem", position: 2, name: names[page], item: `${BASE}/${page}` });
   }
   injectJsonLd({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items });
 }
 async function initReviewSchema() {
   const page = document.body.dataset.page;
-  if (page !== "reviews.html") return;
+  if (page !== "reviews") return;
   try {
     const rs = await getReviews();
     if (!rs.length) return;
