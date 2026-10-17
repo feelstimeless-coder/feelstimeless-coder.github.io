@@ -141,9 +141,15 @@ function renderChrome() {
 
   // nav behavior
   const nav = document.getElementById("mainnav");
-  document.getElementById("burger").addEventListener("click", () => nav.classList.add("open"));
+  document.getElementById("burger").addEventListener("click", () => {
+    nav.classList.add("open");
+    document.body.classList.add("menu-open");
+  });
   nav.addEventListener("click", (e) => {
-    if (e.target.closest("a") || e.target.closest(".navclose")) nav.classList.remove("open");
+    if (e.target.closest("a") || e.target.closest(".navclose")) {
+      nav.classList.remove("open");
+      document.body.classList.remove("menu-open");
+    }
   });
 
   // theme

@@ -129,17 +129,28 @@ html[data-theme="dark"] nav.main a.cta:hover { color: #14150f; }
 
 @media (max-width: 940px) {
   .burger { display: inline-flex; }
-  nav.main {
-    position: fixed; inset: 0; top: 0; z-index: 70;
+  /* while the menu is open, drop the header's backdrop-filter so the
+     fixed overlay positions against the real viewport */
+  header.site:has(nav.main.open) {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
     background: var(--paper);
-    flex-direction: column; justify-content: center; gap: 10px;
+  }
+  nav.main {
+    position: fixed; inset: 0; z-index: 70;
+    width: 100vw; height: 100dvh;
+    background: var(--paper);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; overflow-y: auto; padding: 72px 0 44px;
     transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.6, 0, 0.2, 1);
   }
   nav.main.open { transform: none; }
-  nav.main a { font-size: 21px; padding: 10px 22px; }
-  .navclose { position: absolute; top: 20px; right: 20px; }
+  nav.main a { font-size: 20px; padding: 9px 22px; }
+  nav.main a.cta { margin-left: 0; margin-top: 10px; }
+  .navclose { position: absolute; top: 18px; right: 18px; z-index: 2; }
   .topbar .hide-m { display: none; }
+  body.menu-open { overflow: hidden; }
 }
+nav.main a.cta { white-space: nowrap; }
 @media (min-width: 941px) { .navclose { display: none; } }
 
 /* ---------- buttons ---------- */
